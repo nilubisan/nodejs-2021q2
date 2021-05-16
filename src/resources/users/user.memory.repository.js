@@ -24,7 +24,7 @@ const updateUser = (userId, updatedUserData) => {
 const deleteUser = (userId) => {
   const ind = users.findIndex((user) => user.id === userId);
   if(ind === -1) return false;
-  const deletedUser = users.splice(ind, 1);
+  users.splice(ind, 1);
   return true
 }
 module.exports = { getAll, createUser, getUserById, updateUser, deleteUser };

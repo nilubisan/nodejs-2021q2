@@ -1,5 +1,5 @@
 
-let tasks = []
+const tasks = []
 
 const getTasksByBoardId = (boardId) => {
   const res = tasks.filter((task) => task.boardId === boardId)
@@ -29,16 +29,9 @@ const updateTask = (updatedTask, boardId, taskId) => {
 }
 
 const deleteTask = (boardId, taskId) => {
-    console.log(`boardId: ${boardId}, taskId: ${taskId}`)
-    console.log('tasks:')
-    console.log(tasks);
     const ind = tasks.findIndex((task) => task.id === taskId && task.boardId === boardId);
-    console.log('Task to delete:')
-    console.log(tasks[ind]);
     if (ind === -1) return false;
     tasks.splice(ind, 1);
-    console.log('tasks after');
-    console.log(tasks)
     return true;
 }
 
