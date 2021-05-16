@@ -1,10 +1,14 @@
 const boardsRepo = require('./board.memory.repository');
-
+const tasksRepo = require('../tasks/task.service');
 const Board = require('./board.model');
 
 const getAllBoards = () => boardsRepo.getAllBoards();
 const createBoard = (board) => (Board.validateBoard(board)) ? boardsRepo.createBoard(new Board(board)) : false;
 const updateBoard = (boardId, updatedBoardData) => (Board.validateBoard(updatedBoardData)) ? boardsRepo.updateBoard(boardId, updatedBoardData) : false;
-const deleteBoard = (boardId) => boardsRepo.deleteBoard(boardId)
+const deleteBoard = (boardId) => {
+    const boardTasks = tasksRepo.getTasksByBoardId(boardId);
+    boardTasks.map((task) => tasksRepo.deleteTask(boardId, task.id))
+    return boardsRepo.deleteBoard(boardId);
+}
 const getBoardById = (boardId) => boardsRepo.getBoardById(boardId)
 module.exports = { getAllBoards, createBoard, getBoardById, updateBoard, deleteBoard };

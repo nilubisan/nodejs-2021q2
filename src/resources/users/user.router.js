@@ -28,7 +28,6 @@ router.route('/:id').put((req,res) => {
 })
 
 router.route('/:id').delete((req,res) => {
-  res.type('application/json');
   const deletedUser = usersService.deleteUser(req.params.id);
   if(deletedUser) res.status(204).send("User has been deleted");
   else res.status(404).send("User not found");

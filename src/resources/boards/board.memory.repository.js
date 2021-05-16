@@ -1,4 +1,3 @@
-
 const boards = []
 
 const getAllBoards = () => 
