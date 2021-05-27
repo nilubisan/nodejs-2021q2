@@ -20,7 +20,13 @@ class User {
     &&
     (user.password && typeof user.password === 'string')
     )
-}
+  }
+
+  updateUser(updatedUser) {
+    this.name = updatedUser.name ? updatedUser.name : this.name;
+    this.login = updatedUser.login ? updatedUser.login : this.login;
+    this.password = updatedUser.password ? updatedUser.password : this.password;
+  }
 }
 
 module.exports = User;

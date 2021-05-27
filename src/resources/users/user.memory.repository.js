@@ -1,30 +1,30 @@
+const User  = require('./user.model')
 
-const users = []
+const USERS = []
 
-const getAll = () => 
-  // TODO: mock implementation. should be replaced during task development
-   users
-;
+const getAll = async () => USERS;
 
-const getUserById = (userId) => users.find((user) => user.id === userId)
+const getUserById = async (userId) => {
+  const foundUser = USERS.find((user) => user.id === userId);
+  return foundUser;
+}
 
-
-const createUser = (user) => {
-  users.push(user)
+const createUser = async (user) => {
+  USERS.push(user)
   return user;
 }
 
-const updateUser = (userId, updatedUserData) => {
-  const ind = users.findIndex((user) => user.id === userId);
-  users[ind] = updatedUserData;
-  users[ind].id = userId
-  return users[ind];
+const updateUser = async (userId, updatedUser) => {
+  const ind = USERS.findIndex((user) => user.id === userId);
+  console.log(USERS[ind]);
+  USERS[ind].updateUser(updatedUser);
+  return User.toResponse(USERS[ind]);
 }
 
-const deleteUser = (userId) => {
-  const ind = users.findIndex((user) => user.id === userId);
+const deleteUser = async (userId) => {
+  const ind = USERS.findIndex((user) => user.id === userId);
   if(ind === -1) return false;
-  users.splice(ind, 1);
+  USERS.splice(ind, 1);
   return true
 }
 module.exports = { getAll, createUser, getUserById, updateUser, deleteUser };

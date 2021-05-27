@@ -22,6 +22,7 @@ const updateTask = (updatedTask, boardId, taskId) => {
   if(ind === -1) {
       return false;
     }
+    
   const taskInd = tasks.findIndex((task) => task.id === taskId)
   Object.assign(tasks[taskInd], updatedTask)
   tasks[taskInd].id = taskId;
