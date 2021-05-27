@@ -1,28 +1,24 @@
-const boards = []
+const BOARDS = []
 
-const getAllBoards = () => 
-   boards
-;
+const getAllBoards = async () => BOARDS;
 
-const getBoardById = (boardId) => boards.find((board) => board.id === boardId)
+const getBoardById = async (boardId) => BOARDS.find((board) => board.id === boardId)
 
-
-const createBoard = (board) => {
-  boards.push(board)
+const createBoard = async (board) => {
+  BOARDS.push(board);
   return board;
 }
 
-const updateBoard = (boardId, updatedBoardData) => {
-  const ind = boards.findIndex((board) => board.id === boardId);
-  boards[ind] = updatedBoardData;
-  boards[ind].id = boardId
-  return boards[ind];
+const updateBoard = async (boardId, updatedBoard) => {
+  const ind = BOARDS.findIndex((board) => board.id === boardId);
+  BOARDS[ind].updateBoard(updatedBoard);
+  return BOARDS[ind];
 }
 
-const deleteBoard = (boardId) => {
-  const ind = boards.findIndex((board) => board.id === boardId);
+const deleteBoard = async (boardId) => {
+  const ind = BOARDS.findIndex((board) => board.id === boardId);
   if(ind === -1) return false;
-  const deletedBoard = boards.splice(ind, 1);
-  return deletedBoard[0]
+  const deletedBoard = BOARDS.splice(ind, 1)[0];
+  return deletedBoard;
 }
 module.exports = { getAllBoards, createBoard, getBoardById, updateBoard, deleteBoard };

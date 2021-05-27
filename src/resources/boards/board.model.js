@@ -13,6 +13,11 @@ class Board {
     (board.columns && Array.isArray(board.columns))
     )
   }
+
+  updateBoard(updatedBoard) {
+    this.title = updatedBoard.title || this.title;
+    this.columns = updatedBoard.columns || this.columns;
+  }
 }
 
 module.exports = Board;
