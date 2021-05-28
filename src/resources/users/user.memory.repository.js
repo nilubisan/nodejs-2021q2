@@ -16,7 +16,6 @@ const createUser = async (user) => {
 
 const updateUser = async (userId, updatedUser) => {
   const ind = USERS.findIndex((user) => user.id === userId);
-  console.log(USERS[ind]);
   USERS[ind].updateUser(updatedUser);
   return User.toResponse(USERS[ind]);
 }

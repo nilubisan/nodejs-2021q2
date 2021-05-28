@@ -11,34 +11,37 @@ class Task {
     this.columnId = task.columnId;
   }
 
-  static validateTask(task) {
-    if(!(task.title !== undefined && typeof task.title === 'string')) {
-      return false
-    }
-    if (!(task.order !== undefined && typeof task.order === 'number')){
-      return false
-    }
-
-    if (!(task.description !== undefined && typeof task.description === 'string')){
-      return false
-    }
-
-   if(!(task.userId !== undefined && (typeof task.userId === 'string' || task.userId === null))) {
-      return false
-    }
-    if(!(task.boardId !== undefined && (typeof task.boardId === 'string' || task.boardId === null))){
-      return false
-    }
-
-    if(!(task.columnId !== undefined && (typeof task.columnId === 'string' || task.columnId === null))){
-      return false
-    }
-    return true;
-  }
+  // static validateTask(task) {
+  //   let isTaskValid;
+  //   if((!task.title || typeof task.title !== 'string')
+  //   ||
+  //   (!task.order || typeof task.order !== 'number')
+  //   ||
+  //   (!task.description || typeof task.description !== 'string')
+  //   ||
+  //   (!task.userId || typeof task.userId !== 'string')
+  //   ||
+  //   (!task.boardId || typeof task.boardId !== 'string')
+  //   ||
+  //   (!task.columnId || typeof task.columnId !== 'string')
+  //   ){
+  //     isTaskValid = false;
+  //   } else isTaskValid = true;
+  //   return isTaskValid;
+  // }
 
   static toResponse(task) {
-    const {id, title, order, description, userId, boardId, columnId} = task;
-    return {id, title, order, description, userId, boardId, columnId}
+    const { id, title, order, description, userId, boardId, columnId } = task;
+    return { id, title, order, description, userId, boardId, columnId }
+  }
+
+  updateTask(updatedTask) {
+    this.title = updatedTask.title || this.title;
+    this.order = updatedTask.order || this.order;
+    this.description = updatedTask.description || this.description;
+    this.userId = updatedTask.userId || this.userId;
+    this.boardId = updatedTask.boardId || this.boardId;
+    this.columnId = updatedTask.columnId || this.columnId;
   }
 }
 

@@ -1,38 +1,30 @@
+const TASKS = [];
 
-const tasks = []
+const getTasksByBoardId = async (boardId) => TASKS.filter((task) => task.boardId === boardId);
 
-const getTasksByBoardId = (boardId) => {
-  const res = tasks.filter((task) => task.boardId === boardId)
-  return res;
-}
-
-const createTask = (task) => {
-  tasks.push(task)
+const createTask = async (task) => {
+  TASKS.push(task)
   return task;
-}
+};
 
-const getTask = (boardId, taskId) => {
-  const selectedBoardTasks = getTasksByBoardId(boardId);
+const getTask = async (boardId, taskId) => {
+  const selectedBoardTasks = await getTasksByBoardId(boardId);
   return selectedBoardTasks.find((task) => task.id === taskId)
-}
+};
 
-const updateTask = (updatedTask, boardId, taskId) => {
-  const selectedBoardTasks = getTasksByBoardId(boardId);
-  const ind = selectedBoardTasks.findIndex((task) => task.id === taskId);
-  if(ind === -1) {
+const updateTask = async (updatedTask, boardId, taskId) => {
+  const selectedTask = TASKS.find((task) => task.boardId === boardId && task.id === taskId);
+  if(!selectedTask) {
       return false;
-    }
-    
-  const taskInd = tasks.findIndex((task) => task.id === taskId)
-  Object.assign(tasks[taskInd], updatedTask)
-  tasks[taskInd].id = taskId;
-  return tasks[ind]
-}
+  }
+  selectedTask.updateTask(updatedTask);
+  return selectedTask;
+};
 
-const deleteTask = (boardId, taskId) => {
-    const ind = tasks.findIndex((task) => task.id === taskId && task.boardId === boardId);
+const deleteTask = async (boardId, taskId) => {
+    const ind = TASKS.findIndex((task) => task.id === taskId && task.boardId === boardId);
     if (ind === -1) return false;
-    tasks.splice(ind, 1);
+    TASKS.splice(ind, 1);
     return true;
 }
 

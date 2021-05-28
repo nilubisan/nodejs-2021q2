@@ -6,10 +6,10 @@ const getAllBoards = async () => boardsRepo.getAllBoards();
 const createBoard = async (board) => (Board.validateBoard(board)) ? boardsRepo.createBoard(new Board(board)) : false;
 const updateBoard = async (boardId, updatedBoardData) => boardsRepo.updateBoard(boardId, updatedBoardData);
 const deleteBoard = async (boardId) => {
-    const deletedBoard = boardsRepo.deleteBoard(boardId);
+    const deletedBoard = await boardsRepo.deleteBoard(boardId);
     if(deletedBoard) {
-        const boardTasks = tasksRepo.getTasksByBoardId(boardId);
-        boardTasks.map((task) => tasksRepo.deleteTask(boardId, task.id));
+        const boardTasks = await tasksRepo.getTasksByBoardId(boardId);
+        boardTasks.map( async (task) => tasksRepo.deleteTask(boardId, task.id));
     }
     return deletedBoard;
 }
