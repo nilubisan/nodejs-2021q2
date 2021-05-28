@@ -28,4 +28,13 @@ const deleteTask = async (boardId, taskId) => {
     return true;
 }
 
-module.exports = { createTask, getTasksByBoardId, getTask, updateTask,  deleteTask};
+const unassignUser = async (userId) => TASKS.map((task, ind) => {
+  const resultTask = {...task};
+  resultTask.userId = (resultTask.userId === userId ? null : resultTask.userId);
+  TASKS[ind] = resultTask;
+  return resultTask;
+});
+
+
+
+module.exports = { createTask, getTasksByBoardId, getTask, updateTask, deleteTask, unassignUser};
