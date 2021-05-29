@@ -32,7 +32,7 @@ class Task {
 
   static toResponse(task) {
     const { id, title, order, description, userId, boardId, columnId } = task;
-    return { id, title, order, description, userId, boardId, columnId }
+    return { id, title, order, description, userId, boardId, columnId };
   }
 
   updateTask(updatedTask) {

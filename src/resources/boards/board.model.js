@@ -8,10 +8,12 @@ class Board {
   }
 
   static validateBoard(board) {
-    return ((board.title && typeof board.title === 'string')
-    &&
-    (board.columns && Array.isArray(board.columns))
-    )
+    return (
+      board.title &&
+      typeof board.title === 'string' &&
+      board.columns &&
+      Array.isArray(board.columns)
+    );
   }
 
   updateBoard(updatedBoard) {

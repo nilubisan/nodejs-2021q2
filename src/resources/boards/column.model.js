@@ -8,8 +8,8 @@ class Column {
   }
 
   updateColumn(column) {
-      this.title = column.title || this.title;
-      this.order = column.order || this.order;
+    this.title = column.title || this.title;
+    this.order = column.order || this.order;
   }
 }
 

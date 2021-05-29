@@ -14,12 +14,14 @@ class User {
   }
 
   static validateUser(user) {
-    return ((user.name && typeof user.name === 'string')
-    &&
-    (user.login && typeof user.login === 'string')
-    &&
-    (user.password && typeof user.password === 'string')
-    )
+    return (
+      user.name &&
+      typeof user.name === 'string' &&
+      user.login &&
+      typeof user.login === 'string' &&
+      user.password &&
+      typeof user.password === 'string'
+    );
   }
 
   updateUser(updatedUser) {
