@@ -9,7 +9,7 @@ const Board = require('./board.model');
 const getAllBoards = async () => boardsRepo.getAllBoards();
 
 /**
- * Passes the ID of the board to Board repository to get it 
+ * Passes the ID of the board to Board repository to get it
  * @param {string} the ID of the board
  * @returns {object | undefined} Board object with specified ID. If there is no board in DB with specified ID, the function will return undefined
  */
@@ -17,7 +17,7 @@ const getBoardById = async (boardId) => boardsRepo.getBoardById(boardId);
 
 /**
  * Checks if passed Board object correct and transmit it to Board repository for adding to DB
- * @param {object} board 
+ * @param {object} board
  * @returns {object | boolean} If passed Board object is not valid, the function will return false value. Otherwise, it will return created Board object
  */
 
@@ -26,10 +26,10 @@ const createBoard = async (board) =>
 
 /**
  * Passes ID of the board to update and new board property(ies) to Board repository
- * @param {string} The ID of the board to update 
+ * @param {string} The ID of the board to update
  * @param {object} New board property(ies)
  * @returns Board object with updated properties
- */  
+ */
 
 const updateBoard = async (boardId, updatedBoardData) =>
   boardsRepo.updateBoard(boardId, updatedBoardData);
