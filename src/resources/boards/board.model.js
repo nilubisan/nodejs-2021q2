@@ -15,7 +15,7 @@ class Board {
 
   /**
    * Checks if passed Board object contains all required properties
-   * @param {*} board 
+   * @param {object} Board object 
    * @returns {boolean} Return true if Board object contains all required properties. Otherwise, return false
    */
   static validateBoard(board) {
