@@ -1,6 +1,13 @@
 const { v4: uuidv4 } = require('uuid');
-
+/**
+ * Class representing a Task model
+ */
 class Task {
+  /**
+   * Creates Task object
+   * @param {object} Task object
+   * @param {string} The ID of the Board which task belongs to
+   */
   constructor(task, boardId) {
     this.id = uuidv4();
     this.title = task.title;
@@ -11,29 +18,21 @@ class Task {
     this.columnId = task.columnId;
   }
 
-  // static validateTask(task) {
-  //   let isTaskValid;
-  //   if((!task.title || typeof task.title !== 'string')
-  //   ||
-  //   (!task.order || typeof task.order !== 'number')
-  //   ||
-  //   (!task.description || typeof task.description !== 'string')
-  //   ||
-  //   (!task.userId || typeof task.userId !== 'string')
-  //   ||
-  //   (!task.boardId || typeof task.boardId !== 'string')
-  //   ||
-  //   (!task.columnId || typeof task.columnId !== 'string')
-  //   ){
-  //     isTaskValid = false;
-  //   } else isTaskValid = true;
-  //   return isTaskValid;
-  // }
+  /**
+   * Returns user version of Task object by hiding special properties
+   * @param {object} Task object to make "response-ready"
+   * @returns {object} Task object after hiding necessary properties
+   */
 
   static toResponse(task) {
     const { id, title, order, description, userId, boardId, columnId } = task;
     return { id, title, order, description, userId, boardId, columnId };
   }
+
+  /**
+   * Updates Task object with new property(ies) passed inside object
+   * @param {object} updated task property(ies)
+   */
 
   updateTask(updatedTask) {
     this.title = updatedTask.title || this.title;
