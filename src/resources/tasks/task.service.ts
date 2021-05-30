@@ -1,12 +1,12 @@
 const tasksRepo = require('./task.memory.repository');
-const Task = require('./task.model');
+import { Task } from './task.model';
 
 /**
  * Get ALL tasks with specified Board ID from tasks repository
  * @param {string} The ID of the board which tasks are assigned to
  * @returns {Array} Array of tasks. If there are no tasks with specified Board ID in DB, the function will return empty array
  */
-const getTasksByBoardId = async (boardId) =>
+export const getTasksByBoardIdService = async (boardId) =>
   tasksRepo.getTasksByBoardId(boardId);
 
 /**
@@ -15,7 +15,7 @@ const getTasksByBoardId = async (boardId) =>
  * @returns {object | boolean} created task object
  */
 
-const createTask = async (task, boardId) =>
+export const createTaskService = async (task, boardId) =>
   tasksRepo.createTask(new Task(task, boardId));
 
 /**
@@ -25,7 +25,7 @@ const createTask = async (task, boardId) =>
  * @returns {object | undefined} Task object with specified IDs. If there is no task in DB with specified IDs, the function will return undefined
  */
 
-const getTask = async (boardId, taskId) => tasksRepo.getTask(boardId, taskId);
+export const getTaskService = async (boardId, taskId) => tasksRepo.getTask(boardId, taskId);
 
 /**
  * Passes Board ID and Task ID and new task property(ies) to Task repository to update task
@@ -35,7 +35,7 @@ const getTask = async (boardId, taskId) => tasksRepo.getTask(boardId, taskId);
  * @returns Board object with updated properties
  */
 
-const updateTask = async (updatedTask, boardId, taskId) =>
+export const updateTaskService = async (updatedTask, boardId, taskId) =>
   tasksRepo.updateTask(updatedTask, boardId, taskId);
 
 /**
@@ -44,7 +44,7 @@ const updateTask = async (updatedTask, boardId, taskId) =>
  * @param {string} The ID of the task to delete
  * @returns {boolean} If there is no Task object with specified IDs in DB, the function will return false. Otherwise, it will return true.
  */
-const deleteTask = async (boardId, taskId) =>
+export const deleteTaskService = async (boardId, taskId) =>
   tasksRepo.deleteTask(boardId, taskId);
 
 /**
@@ -54,11 +54,3 @@ const deleteTask = async (boardId, taskId) =>
  */
 const unassignUser = async (userId) => tasksRepo.unassignUser(userId);
 
-module.exports = {
-  getTasksByBoardId,
-  createTask,
-  getTask,
-  updateTask,
-  deleteTask,
-  unassignUser,
-};

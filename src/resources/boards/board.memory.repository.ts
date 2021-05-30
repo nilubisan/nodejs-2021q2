@@ -1,21 +1,23 @@
+import { Board, IBoardUpdated } from './board.model';
+
 /**
  * Simulation of Boards DB {Array}
  */
-const BOARDS = [];
+const BOARDS: Array<Board> = [];
 
 /**
  * Returns ALL boards from Boards DB
  * @returns  {Array} Array of boards. If there are no boards in DB, the function will return empty array
  */
-const getAllBoards = async () => BOARDS;
+export const getAllBoards = async ():Promise<Array<Board>> => BOARDS;
 
 /**
  * Returns board with specified ID from Boards DB
  * @param {string} The ID of the board to get
  * @returns {object | undefined} Board object with specified ID. If there is no board in DB with specified ID, the function will return undefined
  */
-const getBoardById = async (boardId) =>
-  BOARDS.find((board) => board.id === boardId);
+export const getBoardById = async (boardId: string): Promise<Board | undefined> =>
+  BOARDS.find((board: Board) => board.id === boardId);
 
 /**
  * Creates new board and adds it to Boards DB
@@ -23,7 +25,7 @@ const getBoardById = async (boardId) =>
  * @returns {object} created board with all required properties
  */
 
-const createBoard = async (board) => {
+export const createBoard = async (board: Board): Promise<Board> => {
   BOARDS.push(board);
   return board;
 };
@@ -35,9 +37,9 @@ const createBoard = async (board) => {
  * @returns {object} Board object with updated properties
  */
 
-const updateBoard = async (boardId, updatedBoard) => {
-  const ind = BOARDS.findIndex((board) => board.id === boardId);
-  BOARDS[ind].updateBoard(updatedBoard);
+export const updateBoard = async (boardId: string, updatedBoard: IBoardUpdated): Promise<Board | undefined> => {
+  const ind:number = BOARDS.findIndex((board) => board.id === boardId);
+  BOARDS[ind]?.updateBoard(updatedBoard);
   return BOARDS[ind];
 };
 
@@ -46,17 +48,9 @@ const updateBoard = async (boardId, updatedBoard) => {
  * @param {string} The ID of the board to delete
  * @returns {object | boolean} If there is no Board object with specified ID in DB, the function will return false. Otherwise, it will return deleted Board object.
  */
-const deleteBoard = async (boardId) => {
-  const ind = BOARDS.findIndex((board) => board.id === boardId);
+export const deleteBoard = async (boardId: string): Promise<Board | boolean | undefined> => {
+  const ind: number = BOARDS.findIndex((board: Board) => board.id === boardId);
   if (ind === -1) return false;
   const deletedBoard = BOARDS.splice(ind, 1)[0];
   return deletedBoard;
-};
-
-module.exports = {
-  getAllBoards,
-  createBoard,
-  getBoardById,
-  updateBoard,
-  deleteBoard,
 };

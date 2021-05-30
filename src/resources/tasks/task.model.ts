@@ -2,7 +2,7 @@ const { v4: uuidv4 } = require('uuid');
 /**
  * Class representing a Task model
  */
-class Task {
+export class Task {
   /**
    * Creates Task object
    * @param {object} Task object
@@ -44,4 +44,3 @@ class Task {
   }
 }
 
-module.exports = Task;
