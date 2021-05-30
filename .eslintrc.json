@@ -16,12 +16,15 @@
     }
   },
   "settings": {
+    "node": {
+      "tryExtensions": [".js", ".json", ".node", ".ts", ".d.ts"]
+  },
     "noInlineConfig": true
   },
   "extends": [
+    "plugin:@typescript-eslint/recommended",
     "eslint:recommended",
     "plugin:node/recommended",
-    "airbnb-typescript/base",
     "prettier"
   ],
   "rules": {
