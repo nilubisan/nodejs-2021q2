@@ -7,9 +7,9 @@
   },
   "type": "commonjs",
   "description": "REST service starter for RS School",
-  "main": "src/server.js",
+  "main": "src/server.ts",
   "scripts": {
-    "start": "nodemon src/server.js",
+    "start": "ts-node src/server.ts",
     "docs": "jsdoc -c .jsdoc.conf.json",
     "lint": "eslint --ext .js,.ts --fix src/",
     "test": "cross-env DEBUG=rs:* jest --testMatch \"<rootDir>/test/e2e/test/*.test.js\" --noStackTrace --runInBand",
@@ -68,6 +68,8 @@
     "lint-staged": "10.5.4",
     "nodemon": "2.0.7",
     "prettier": "2.2.1",
-    "supertest": "6.1.3"
+    "supertest": "6.1.3",
+    "ts-node": "^10.0.0",
+    "typescript": "^4.3.2"
   }
 }
