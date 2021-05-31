@@ -4,8 +4,9 @@ import { User } from './user.model';
 import { getAllUsersService, getUserByIdService, createUserService, updateUserService, deleteUserService } from './user.service'
 export const userRouter = express.Router();
 
-userRouter.route('/').get(async (res: Response) => {
+userRouter.route('/').get(async (_req, res: Response) => {
   const users = await getAllUsersService();
+  console.log(users);
   res.status(200).json(users.map(User.toResponse));
 });
 
@@ -40,7 +41,7 @@ userRouter.route('/:id').put(async (req: Request, res: Response) => {
 userRouter.route('/:id').delete(async (req: Request, res: Response) => {
   const userId = req.params['id'] as string;
   const deletedUser = await deleteUserService(userId);
-  if (deletedUser) res.status(204).send('User has been deleted');
+  if(deletedUser === true) res.status(204).send('User has been deleted');
   else res.status(404).send('User not found');
 });
 

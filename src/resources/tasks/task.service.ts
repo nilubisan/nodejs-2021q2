@@ -1,4 +1,4 @@
-import { getTasksByBoardId, createTask, getTask, updateTask, deleteTask } from './task.memory.repository';
+import { getTasksByBoardId, createTask, getTask, updateTask, deleteTask, unassignUser } from './task.memory.repository';
 import { ITaskUpdated, Task } from './task.model';
 
 /**
@@ -52,5 +52,5 @@ export const deleteTaskService = async (boardId: string, taskId: string): Promis
  * @param {string} User ID
  * @returns {undefined}
  */
-export const unassignUser = async (userId: string): Promise<void> => unassignUser(userId);
+export const unassignUserService = async (userId: string): Promise<void> => unassignUser(userId);
 

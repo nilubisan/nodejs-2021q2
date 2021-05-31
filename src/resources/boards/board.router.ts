@@ -6,7 +6,7 @@ import { getTasksByBoardIdService, createTaskService, getTaskService, updateTask
 import { Board } from './board.model';
 export const boardRouter = express.Router();
 
-boardRouter.route('/').get(async (res: Response) => {
+boardRouter.route('/').get(async (_req, res: Response) => {
   const boards: Board[] = await getAllBoardsService()
   res.status(200).json(boards);
 });

@@ -1,6 +1,6 @@
 import { getAllUsers, getUserById, createUser, updateUser, deleteUser } from './user.memory.repository';
 import { IUserToResponse, IUserUpdated, User } from './user.model';
-import { unassignUser } from '../tasks/task.service'
+import { unassignUserService } from '../tasks/task.service'
 /**
  * Gets all users from user repository
  * @returns {Array} {Array} Array of users. If there are no users in DB, the function will return empty array
@@ -37,7 +37,7 @@ export const updateUserService = async (userId: string, updatedUserData: IUserUp
  * @returns {object | boolean} If there is no User object with specified ID in DB, the function will return false. Otherwise, it will return true.
  */
 export const deleteUserService = async (userId: string): Promise<boolean> => {
-  const deletedUser = deleteUser(userId);
-  if (deletedUser) unassignUser(userId);
+  const deletedUser = await deleteUser(userId);
+  if (deletedUser) unassignUserService(userId);
   return deletedUser;
 };
