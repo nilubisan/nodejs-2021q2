@@ -16,8 +16,12 @@ export const getAllBoards = async ():Promise<Array<Board>> => BOARDS;
  * @param {string} The ID of the board to get
  * @returns {object | undefined} Board object with specified ID. If there is no board in DB with specified ID, the function will return undefined
  */
-export const getBoardById = async (boardId: string): Promise<Board | undefined> =>
-  BOARDS.find((board: Board) => board.id === boardId);
+export const getBoardById = async (boardId: string): Promise<Board | boolean> => {
+  const board = BOARDS.find((board: Board) => board.id === boardId);
+  if(!board) return false;
+  else return board
+}
+  
 
 /**
  * Creates new board and adds it to Boards DB
@@ -37,10 +41,14 @@ export const createBoard = async (board: Board): Promise<Board> => {
  * @returns {object} Board object with updated properties
  */
 
-export const updateBoard = async (boardId: string, updatedBoard: IBoardUpdated): Promise<Board | undefined> => {
+export const updateBoard = async (boardId: string, updatedBoard: IBoardUpdated): Promise<Board | boolean> => {
   const ind:number = BOARDS.findIndex((board) => board.id === boardId);
-  BOARDS[ind]?.updateBoard(updatedBoard);
-  return BOARDS[ind];
+  if(ind === -1) return false;
+  else {
+  const BoardToUpdate = BOARDS[ind] as Board;
+  BoardToUpdate.updateBoard(updatedBoard);
+  return BoardToUpdate;
+  }
 };
 
 /**
@@ -48,9 +56,9 @@ export const updateBoard = async (boardId: string, updatedBoard: IBoardUpdated):
  * @param {string} The ID of the board to delete
  * @returns {object | boolean} If there is no Board object with specified ID in DB, the function will return false. Otherwise, it will return deleted Board object.
  */
-export const deleteBoard = async (boardId: string): Promise<Board | boolean | undefined> => {
+export const deleteBoard = async (boardId: string): Promise<Board | boolean> => {
   const ind: number = BOARDS.findIndex((board: Board) => board.id === boardId);
   if (ind === -1) return false;
-  const deletedBoard = BOARDS.splice(ind, 1)[0];
+  const deletedBoard = BOARDS.splice(ind, 1)[0] as Board;
   return deletedBoard;
 };

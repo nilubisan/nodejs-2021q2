@@ -7,33 +7,34 @@ import { Board } from './board.model';
 export const boardRouter = express.Router();
 
 boardRouter.route('/').get(async (res: Response) => {
-  const boards: Promise<Board> = await getAllBoardsService()
-  .then(() => {
-    res.status(200).json(boards);
-  })
+  const boards: Board[] = await getAllBoardsService()
+  res.status(200).json(boards);
 });
 
 boardRouter.route('/:id').get(async (req: Request, res: Response) => {
-  const board: Board = await getBoardByIdService(req.params['id']);
+  const boardId = req.params['id'] as string;
+  const board  = await getBoardByIdService(boardId);
   if (!board) {
     res.status(404).send('Board not found');
   } else res.status(200).json(board);
 });
 
-boardRouter.route('/').post(async (req: Request, res: Response): Promise<void> => {
-  const board: Board = await createBoardService(req.body);
+boardRouter.route('/').post(async (req: Request, res: Response) => {
+  const board = await createBoardService(req.body);
   if (!board) res.status(400).send('Bad request');
   else res.status(201).json(board);
 });
 
-boardRouter.route('/:id').put(async (req: Request, res: Response): Promise<void> => {
-  const board: Board = await updateBoardService(req.params['id'], req.body);
+boardRouter.route('/:id').put(async (req: Request, res: Response) => {
+  const boardId = req.params['id'] as string;
+  const board = await updateBoardService(boardId, req.body);
   if (!board) res.status(400).send('Bad request');
   else res.status(200).json(board);
 });
 
-boardRouter.route('/:boardId').delete(async (req: Request, res: Response): Promise<void> => {
-  const deletedBoard:Promise<boolean> = await deleteBoardService(req.params['boardId']);
+boardRouter.route('/:boardId').delete(async (req: Request, res: Response) => {
+  const boardId = req.params['id'] as string
+  const deletedBoard:Board|boolean = await deleteBoardService(boardId);
   if (deletedBoard) res.status(204).send('Board has been deleted');
   else res.status(404).send('Board not found');
 });

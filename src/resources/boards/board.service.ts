@@ -14,7 +14,7 @@ export const getAllBoardsService = async (): Promise<Board[]> => getAllBoards();
  * @param {string} the ID of the board
  * @returns {object | undefined} Board object with specified ID. If there is no board in DB with specified ID, the function will return undefined
  */
-export const getBoardByIdService = async (boardId: string): Promise<Board | undefined> => getBoardById(boardId);
+export const getBoardByIdService = async (boardId: string): Promise<Board | boolean> => getBoardById(boardId);
 
 /**
  * Checks if passed Board object correct and transmit it to Board repository for adding to DB
@@ -32,7 +32,7 @@ export const createBoardService = async (board: Board): Promise<Board | boolean>
  * @returns Board object with updated properties
  */
 
-export const updateBoardService = async (boardId: string, updatedBoardData: IBoardUpdated): Promise<Board | undefined> =>
+export const updateBoardService = async (boardId: string, updatedBoardData: IBoardUpdated): Promise<Board | boolean> =>
 updateBoard(boardId, updatedBoardData);
 
 /**
@@ -41,7 +41,7 @@ updateBoard(boardId, updatedBoardData);
  * @returns {object | boolean} If there is no Board object with specified ID in DB, the function will return false. Otherwise, it will return deleted Board object.
  */
 
-export const deleteBoardService = async (boardId: string): Promise<Board | boolean | undefined> => {
+export const deleteBoardService = async (boardId: string): Promise<Board | boolean> => {
   const deletedBoard = await deleteBoard(boardId);
   if (deletedBoard) {
     const boardTasks = await getTasksByBoardIdService(boardId);
