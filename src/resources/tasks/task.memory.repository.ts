@@ -1,14 +1,16 @@
+import { Task, ITaskUpdated } from './task.model';
+
 /**
  * Simulation of Tasks DB {Array}
  */
-const TASKS = [];
+const TASKS: Array<Task> = [];
 
 /**
  * Returns ALL tasks with specified Board ID from Tasks DB
  * @param {string} The ID of the board which tasks are assigned to
  * @returns {Array} Array of tasks. If there are no tasks with specified Board ID in DB, the function will return empty array
  */
-const getTasksByBoardId = async (boardId) =>
+export const getTasksByBoardId = async (boardId: string): Promise<Array<Task> | []> => 
   TASKS.filter((task) => task.boardId === boardId);
 
 /**
@@ -17,7 +19,7 @@ const getTasksByBoardId = async (boardId) =>
  * @returns {object} created task
  */
 
-const createTask = async (task) => {
+export const createTask = async (task: Task): Promise<Task> => {
   TASKS.push(task);
   return task;
 };
@@ -29,9 +31,10 @@ const createTask = async (task) => {
  * @returns {object | undefined} Task object with specified Board ID and Task ID. If there is no such task in DB, the function will return undefined
  */
 
-const getTask = async (boardId, taskId) => {
+export const getTask = async (boardId: string, taskId: string): Promise<Task | boolean> => {
   const selectedBoardTasks = await getTasksByBoardId(boardId);
-  return selectedBoardTasks.find((task) => task.id === taskId);
+  const task = selectedBoardTasks.find((task) => task.id === taskId);
+  return task === undefined ? false : task;
 };
 
 /**
@@ -42,13 +45,11 @@ const getTask = async (boardId, taskId) => {
  * @returns {object} Task object with updated properties
  */
 
-const updateTask = async (updatedTask, boardId, taskId) => {
+export const updateTask = async (updatedTask: ITaskUpdated, boardId: string, taskId: string): Promise<Task | boolean> => {
   const selectedTask = TASKS.find(
     (task) => task.boardId === boardId && task.id === taskId
   );
-  if (!selectedTask) {
-    return false;
-  }
+  if (!selectedTask) return false;
   selectedTask.updateTask(updatedTask);
   return selectedTask;
 };
@@ -60,7 +61,7 @@ const updateTask = async (updatedTask, boardId, taskId) => {
  * @returns {boolean} If there is no Task object with specified IDs in DB, the function will return false. Otherwise, it will return true.
  */
 
-const deleteTask = async (boardId, taskId) => {
+export const deleteTask = async (boardId: string, taskId: string): Promise<boolean> => {
   const ind = TASKS.findIndex(
     (task) => task.id === taskId && task.boardId === boardId
   );
@@ -75,13 +76,9 @@ const deleteTask = async (boardId, taskId) => {
  * @returns {undefined}
  */
 
-const unassignUser = async (userId) =>
-  TASKS.map((task, ind) => {
-    const resultTask = { ...task };
-    resultTask.userId = resultTask.userId === userId ? null : resultTask.userId;
-    TASKS[ind] = resultTask;
-    return resultTask;
-  });
+export const unassignUser = async (userId: string): Promise<void> => 
+  TASKS.forEach((task) => task.userId = (task.userId === userId ? null : task.userId))
+
 
 module.exports = {
   createTask,

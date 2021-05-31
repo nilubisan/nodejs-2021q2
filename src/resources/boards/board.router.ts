@@ -40,48 +40,56 @@ boardRouter.route('/:boardId').delete(async (req: Request, res: Response) => {
 });
 
 boardRouter.route('/:boardId/tasks').get(async (req: Request, res: Response): Promise<void> => {
-  const tasks: Promise<[Task]|[]> = await getTasksByBoardIdService(req.params['boardId']);
-  res.status(200).json((await tasks).map((task: Task) => Task.toResponse(task)));
+  const boardId = req.params['boardId'] as string;
+  const tasks: Task[]|[] = await getTasksByBoardIdService(boardId);
+  res.status(200).json((await tasks).map((task: Task) => task));
 });
 
 boardRouter.route('/:boardId/tasks').post(async (req: Request, res: Response): Promise<void> => {
-  const task: Task = await createTaskService(req.body, req.params['boardId']);
+  const boardId = req.params['boardId'] as string;
+  const task: Task = await createTaskService(req.body, boardId);
   if (!task) {
     res.status(400).send('Bad request');
   } else {
-    res.status(201).json(Task.toResponse(task));
+    res.status(201).json(task);
   }
 });
 
 boardRouter.route('/:boardId/tasks/:taskId').get(async (req: Request, res: Response): Promise<void> => {
-  const task: Task = await getTaskService(
-    req.params['boardId'],
-    req.params['taskId']
+  const boardId = req.params['boardId'] as string;
+  const taskId = req.params['taskId'] as string;
+  const task: Task | boolean = await getTaskService(
+    boardId,
+    taskId
   );
   if (!task) {
     res.status(404).send('Bad request');
   } else {
-    res.status(200).send(Task.toResponse(task));
+    res.status(200).send(task);
   }
 });
 
 boardRouter.route('/:boardId/tasks/:taskId').put(async (req: Request, res: Response): Promise<void> => {
-  const task: Task = await updateTaskService(
+  const boardId = req.params['boardId'] as string;
+  const taskId = req.params['taskId'] as string;
+  const task: Task | boolean = await updateTaskService(
     req.body,
-    req.params['boardId'],
-    req.params['taskId']
+    boardId,
+    taskId
   );
   if (!task) {
     res.status(400).send('Bad request');
   } else {
-    res.status(200).json(Task.toResponse(task));
+    res.status(200).json(task);
   }
 });
 
 boardRouter.route('/:boardId/tasks/:taskId').delete(async (req: Request, res: Response): Promise<void> => {
-  const result: Promise<boolean> = await deleteTaskService(
-    req.params['boardId'],
-    req.params['taskId']
+  const boardId = req.params['boardId'] as string;
+  const taskId = req.params['taskId'] as string;
+  const result: boolean = await deleteTaskService(
+    boardId,
+    taskId
   );
   if (!result) {
     res.status(404).send('Task not found');
