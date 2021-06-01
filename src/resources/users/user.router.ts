@@ -6,7 +6,6 @@ export const userRouter = express.Router();
 
 userRouter.route('/').get(async (_req, res: Response) => {
   const users = await getAllUsersService();
-  console.log(users);
   res.status(200).json(users.map(User.toResponse));
 });
 

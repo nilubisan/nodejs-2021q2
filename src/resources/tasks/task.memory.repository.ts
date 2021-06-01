@@ -10,9 +10,10 @@ const TASKS: Array<Task> = [];
  * @param {string} The ID of the board which tasks are assigned to
  * @returns {Array} Array of tasks. If there are no tasks with specified Board ID in DB, the function will return empty array
  */
-export const getTasksByBoardId = async (boardId: string): Promise<Array<Task> | []> => 
-  TASKS.filter((task) => task.boardId === boardId);
-
+export const getTasksByBoardId = async (boardId: string): Promise<Array<Task> | []> => {
+  const tasks = TASKS.filter((task) => task.boardId === boardId);
+  return tasks;
+}
 /**
  * Creates new task and adds it to Tasks DB
  * @param {object} a Task object
@@ -78,13 +79,3 @@ export const deleteTask = async (boardId: string, taskId: string): Promise<boole
 
 export const unassignUser = async (userId: string): Promise<void> => 
   TASKS.forEach((task) => task.userId = (task.userId === userId ? null : task.userId))
-
-
-module.exports = {
-  createTask,
-  getTasksByBoardId,
-  getTask,
-  updateTask,
-  deleteTask,
-  unassignUser,
-};

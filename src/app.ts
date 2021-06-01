@@ -21,6 +21,11 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+app.use((error: Error, _req: Request, res: Response, next: NextFunction) => {
+  res.status(500).send("Error!");
+  next(error);
+})
+
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 

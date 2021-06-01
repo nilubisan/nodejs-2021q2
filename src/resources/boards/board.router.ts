@@ -33,16 +33,18 @@ boardRouter.route('/:id').put(async (req: Request, res: Response) => {
 });
 
 boardRouter.route('/:boardId').delete(async (req: Request, res: Response) => {
-  const boardId = req.params['id'] as string
+  const boardId = req.params['boardId'] as string
   const deletedBoard:Board|boolean = await deleteBoardService(boardId);
   if (deletedBoard) res.status(204).send('Board has been deleted');
-  else res.status(404).send('Board not found');
+  else {
+    res.status(404).send('Board not found');
+  }
 });
 
 boardRouter.route('/:boardId/tasks').get(async (req: Request, res: Response): Promise<void> => {
   const boardId = req.params['boardId'] as string;
   const tasks: Task[]|[] = await getTasksByBoardIdService(boardId);
-  res.status(200).json((await tasks).map((task: Task) => task));
+  res.status(200).json((tasks).map((task: Task) => task));
 });
 
 boardRouter.route('/:boardId/tasks').post(async (req: Request, res: Response): Promise<void> => {
