@@ -4,14 +4,18 @@ import path from 'path';
 import YAML from 'yamljs';
 import { userRouter } from './resources/users/user.router';
 import { boardRouter } from './resources/boards/board.router';
-import {Application, Request, Response, NextFunction} from 'express';
+import { Request, Response, NextFunction } from 'express';
+import { reqResLog } from './middleware/req-res-log';
 
-export const app: Application = express();
+export const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 app.use(express.json());
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
+
+app.use(reqResLog);
+
 
 app.use('/', (req: Request, res: Response, next: NextFunction) => {
   if (req.originalUrl === '/') {
@@ -21,10 +25,12 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-app.use((error: Error, _req: Request, res: Response, next: NextFunction) => {
-  res.status(500).send("Error!");
-  next(error);
-})
+
+
+// app.use((error: Error, _req: Request, res: Response, next: NextFunction) => {
+//   res.status(500).send("Error!");
+//   next(error);
+// })
 
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
