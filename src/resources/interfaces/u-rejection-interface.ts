@@ -1,4 +1,6 @@
 export interface IURejection {
     level: string,
-    message: Error["message"]
+    name: string,
+    message: Error["message"],
+    stack: string | undefined
 }

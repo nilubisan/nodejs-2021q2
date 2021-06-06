@@ -1,7 +1,7 @@
 export interface IUException {
     level: string,
-    uException: Error["name"],
-    uExceptionOrigin: string,
+    name: Error["name"],
+    origin: string,
     message: Error["message"],
-    uExceptionStack: Error["stack"]
+    stack: Error["stack"]
 }

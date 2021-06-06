@@ -28,29 +28,32 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
+
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
+
 
 app.use(unhandledErrLog);
 
 process.on("uncaughtException", (err: Error, origin: string) => {
   const uExceptionLogMessage: IUException = {
     level: "error",
-    uException: err.name,
-    uExceptionOrigin: origin,
-    uExceptionStack: err.stack,
+    name: "uncaughtException",
+    origin: origin,
+    stack: err.stack,
     message: err.message,
   }
   logger(uExceptionLogMessage);
   process.exitCode = 1;
 })
 
-process.on("unhandledRejection", (err: Error, _rejectPromise: Promise<any>) => {
+process.on("unhandledRejection", (err: Error, rejectPromise: Promise<never>) => {
   const uRejectionLogMessage: IURejection = {
     level: "error",
-    message: err["message"]
+    name: "unhandledRejection",
+    message: err["message"],
+    stack: err.stack
   }
   logger(uRejectionLogMessage);
-}
-
-)
+  console.error(rejectPromise)
+})
