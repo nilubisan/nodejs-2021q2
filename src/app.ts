@@ -6,6 +6,8 @@ import { userRouter } from './resources/users/user.router';
 import { boardRouter } from './resources/boards/board.router';
 import { Request, Response, NextFunction } from 'express';
 import { reqResLog } from './middleware/req-res-log';
+import { unhandledErrLog } from './middleware/unhandled-err-log';
+
 
 export const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
@@ -14,8 +16,11 @@ app.use(express.json());
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-app.use(reqResLog);
+app.get('/', () => {
+  throw new Error();
+})
 
+app.use(reqResLog);
 
 app.use('/', (req: Request, res: Response, next: NextFunction) => {
   if (req.originalUrl === '/') {
@@ -25,13 +30,7 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-
-
-// app.use((error: Error, _req: Request, res: Response, next: NextFunction) => {
-//   res.status(500).send("Error!");
-//   next(error);
-// })
-
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 
+app.use(unhandledErrLog);
