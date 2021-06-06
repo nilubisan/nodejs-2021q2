@@ -27,11 +27,12 @@
     "prettier"
   ],
   "rules": {
+    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
     "import/extensions": "off",
     "linebreak-style": "off",
     "node/no-unsupported-features/es-syntax": "off",
     "no-underscore-dangle": "off",
-    "import/prefer-default-export": "off",
-    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }]
+    "import/prefer-default-export": "off"
+
   }
 }

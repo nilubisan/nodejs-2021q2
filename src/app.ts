@@ -5,22 +5,17 @@ import YAML from 'yamljs';
 import { userRouter } from './resources/users/user.router';
 import { boardRouter } from './resources/boards/board.router';
 import { Request, Response, NextFunction } from 'express';
-import { reqResLog } from './middleware/req-res-log';
+import { reqResHandler } from './middleware/req-res-handler';
 import { unhandledErrLog } from './middleware/unhandled-err-log';
-
-
 export const app = express();
+
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
 
 app.use(express.json());
 
 app.use('/doc', swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-app.get('/', () => {
-  throw new Error();
-})
-
-app.use(reqResLog);
+app.use(reqResHandler);
 
 app.use('/', (req: Request, res: Response, next: NextFunction) => {
   if (req.originalUrl === '/') {
