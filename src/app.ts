@@ -9,6 +9,7 @@ import { reqResHandler } from './middleware/req-res-handler';
 import { unhandledErrLog } from './middleware/unhandled-err-log';
 import { logger } from './common/logger'
 import { IUException } from './resources/interfaces/u-exception-interface';
+import { IURejection } from './resources/interfaces/u-rejection-interface';
 export const app = express();
 
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
@@ -43,3 +44,13 @@ process.on("uncaughtException", (err: Error, origin: string) => {
   logger(uExceptionLogMessage);
   process.exitCode = 1;
 })
+
+process.on("unhandledRejection", (err: Error, _rejectPromise: Promise<any>) => {
+  const uRejectionLogMessage: IURejection = {
+    level: "error",
+    message: err["message"]
+  }
+  logger(uRejectionLogMessage);
+}
+
+)

@@ -27,7 +27,7 @@
     "prettier"
   ],
   "rules": {
-    "no-unused-vars": ["error", { "argsIgnorePattern": "next" }],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
     "import/extensions": "off",
     "linebreak-style": "off",
     "node/no-unsupported-features/es-syntax": "off",
