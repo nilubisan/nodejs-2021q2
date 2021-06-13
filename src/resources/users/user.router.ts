@@ -2,7 +2,7 @@ import express from 'express';
 import { Request, Response } from 'express'
 import { User } from './user.model';
 import { getAllUsersService, getUserByIdService, createUserService, updateUserService, deleteUserService } from './user.service'
-export const userRouter = express.Router();
+export const userRouter = express.Router({ mergeParams : true });
 
 userRouter.route('/').get(async (_req, res: Response) => {
   const users = await getAllUsersService();
