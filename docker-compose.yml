@@ -1,17 +1,27 @@
-# version: '3',
-# services: 
-#     node:
-#         build: .
-#         ports: 
-#             - ${PORT}:${PORT}
-#         depends_on:
-#         environment: 
-#             - PORT=8080
-#     postgres: 
-#     build: ./database
-#     ports: 
-#         - ${POSTGRES_PORT}:${POSTGRES_PORT}
-#     environment: 
-#         POSTGRES_USER: ${POSTGRES_USER}
-#         POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-#         POSTGRES_DB: ${POSTGRES_DB}
+version: '3.7'
+services: 
+    node:
+        image: node
+        build: .
+        ports: 
+            - ${PORT}:${PORT}
+        depends_on:
+            - postgres
+        environment: 
+            - PORT:${PORT}
+        volumes: 
+            - ./logs:/usr/app/src/logs
+            - ./src:/usr/app/src
+    postgres: 
+        image: postgres
+        build: ./database
+        restart: on-failure
+        ports: 
+            - ${POSTGRES_PORT}:${POSTGRES_PORT}
+        environment:
+            POSTGRES_HOST_AUTH_METHOD: "trust"
+            POSTGRES_USER: ${POSTGRES_USER}
+            POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+            POSTGRES_PORT: ${POSTGRES_PORT}
+            POSTGRES_DB: ${POSTGRES_DB}
+            
