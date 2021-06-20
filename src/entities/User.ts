@@ -6,13 +6,19 @@ export class User {
     @PrimaryColumn()
     id: string;
 
-    @Column()
+    @Column({
+        length: 30
+    })
     name: string;
 
-    @Column()
+    @Column({
+        length: 30
+    })
     login: string;
 
-    @Column()
+    @Column({
+        length: 30
+    })
     password: string;
 
 }

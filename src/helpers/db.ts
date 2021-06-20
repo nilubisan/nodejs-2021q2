@@ -1,6 +1,8 @@
 import { getConnection, createConnection} from 'typeorm';
 import { connectionConfig } from '../common/ormconfig';
 
+
+
 const connectToDB = async () => {
     let connection;
 

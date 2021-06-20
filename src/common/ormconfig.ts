@@ -1,14 +1,20 @@
 import dotenv from 'dotenv';
 import { ConnectionOptions } from 'typeorm'
-dotenv.config();
+import path from 'path';
+
+dotenv.config({
+    path: path.join(__dirname, '../../.env')
+});
 
 export const connectionConfig = {
-    type: "postgres",
+    type: 'postgres',
+    name: 'pgconnection',
     host: process.env['DB_HOST'],
-    port: process?.env?.['DB_PORTS'],
+    port: process?.env?.['DB_PORT'],
     username: process?.env?.['DB_USERNAME'],
     password: process?.env?.['DB_PASSWORD'],
     database: process?.env?.['DB_NAME'],
+    entities: ['../entities/*.ts'],
     synchronize: true,
     autoReconnect: true,
     reconnectTries: Number.MAX_VALUE,

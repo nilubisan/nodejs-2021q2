@@ -6,7 +6,9 @@ export class Board {
     @PrimaryColumn()
     id: string;
 
-    @Column()
+    @Column({
+        length: 30
+    })
     name: string;
 
     @Column()

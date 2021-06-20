@@ -6,13 +6,17 @@ export class Task {
     @PrimaryColumn()
     id: string;
 
-    @Column()
+    @Column({
+        length: 30
+    })
     title: string;
 
     @Column()
     order: number;
 
-    @Column()
+    @Column({
+        length: 60
+    })
     description: string;
 
     @Column()

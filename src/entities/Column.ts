@@ -6,7 +6,9 @@ export class BColumn {
     @PrimaryColumn()
     id: string;
 
-    @Column()
+    @Column({
+        length: 30
+    })
     title: string;
 
     @Column()
