@@ -8,13 +8,12 @@ dotenv.config({
 
 export const connectionConfig = {
     type: 'postgres',
-    name: 'pgconnection',
     host: process.env['DB_HOST'],
     port: process?.env?.['DB_PORT'],
     username: process?.env?.['DB_USERNAME'],
     password: process?.env?.['DB_PASSWORD'],
     database: process?.env?.['DB_NAME'],
-    entities: ['../entities/*.ts'],
+    entities: [path.join(__dirname, '../entities/*.ts')],
     synchronize: true,
     autoReconnect: true,
     reconnectTries: Number.MAX_VALUE,

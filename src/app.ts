@@ -10,13 +10,9 @@ import { unhandledErrLog } from './middleware/unhandled-err-log';
 import { logger } from './common/logger'
 import { IUException } from './resources/interfaces/u-exception-interface';
 import { IURejection } from './resources/interfaces/u-rejection-interface';
-import { tryDBConnect } from './helpers/db';
+
 export const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
-
-tryDBConnect(() => {
-  console.log("Successfully connected!")
-});
 
 app.use(express.json());
 
