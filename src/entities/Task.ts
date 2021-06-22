@@ -1,9 +1,8 @@
-import { Entity, Column, PrimaryColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity({name: "Task"})
 export class Task {
-    
-    @PrimaryColumn()
+    @PrimaryGeneratedColumn('uuid')
     id: string;
 
     @Column({
@@ -19,13 +18,16 @@ export class Task {
     })
     description: string;
 
-    @Column()
-    userId: string;
+    @Column({
+        nullable: true,
+        type: 'text'
+    })
+    userID?: string | null;
 
     @Column()
-    boardId: string;
+    boardID: string;
 
     @Column()
-    columnId: string;
+    columnID: string;
 
 }
