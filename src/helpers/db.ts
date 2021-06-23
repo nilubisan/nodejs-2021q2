@@ -24,7 +24,7 @@ const connectToDB = async () => {
     }
 }
 
-export const tryDBConnect = async (cb: any) => {
+export const tryDBConnect = async (cb: () => void): Promise<void> => {
     try {
         await connectToDB();
         cb();
