@@ -1,7 +1,7 @@
 import {getAllBoards, getBoardById, createBoard, updateBoard, deleteBoard} from './board.memory.repository';
-// import { getTasksByBoardIdService, deleteTaskService } from '../tasks/task.service';
+import { deleteBoardsTasksService } from '../tasks/task.service';
 import { Board } from '../../entities/Board'
-// import { Task } from '../tasks/task.model';
+
 
 export const getAllBoardsService = async (): Promise<Board[]> => getAllBoards();
 
@@ -15,10 +15,9 @@ updateBoard(boardId, board);
 
 export const deleteBoardService = async (boardId: string): Promise<'NOT FOUND' | 'DELETED'> => {
   const deletionRes = await deleteBoard(boardId);
-  // if (deletionRes === 'DELETED') {
-  //   const boardTasks = await getTasksByBoardIdService(boardId);
-  //   boardTasks.map(async (task: Task) => deleteTaskService(boardId, task.id));
-  // }
+  if (deletionRes === 'DELETED') {
+    await deleteBoardsTasksService(boardId);
+  }
   return deletionRes;
 };
 

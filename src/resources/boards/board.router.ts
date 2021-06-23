@@ -47,9 +47,9 @@ boardRouter.route('/:boardId/tasks').get(async (req: Request, res: Response): Pr
 });
 
 boardRouter.route('/:boardId/tasks').post(async (req: Request, res: Response): Promise<void> => {
-  // const boardId = req.params['boardId'] as string;
-  const task = await createTaskService(req.body);
-    res.status(201).json(task);
+  const boardID = req.params['boardId'] as string;
+  const task = await createTaskService(boardID, req.body);
+  res.status(201).json(task);
 });
 
 boardRouter.route('/:boardId/tasks/:taskId').get(async (req: Request, res: Response): Promise<void> => {
@@ -62,7 +62,7 @@ boardRouter.route('/:boardId/tasks/:taskId').get(async (req: Request, res: Respo
   if (result === 'NOT FOUND') {
     res.status(404).send(result);
   } else {
-    res.status(200).send(result);
+    res.status(200).json(result);
   }
 });
 

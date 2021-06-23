@@ -12,7 +12,7 @@ userRouter.route('/:id').get(async (req: Request, res: Response) => {
   const userID = req.params['id'] as string;
   const result = await getUserByIdService(userID);
   if (result === 'NOT FOUND') res.status(404).send('User not found');
-  res.status(201).json(result);
+  res.status(200).json(result);
 });
 
 userRouter.route('/').post(async (req: Request, res: Response) => {

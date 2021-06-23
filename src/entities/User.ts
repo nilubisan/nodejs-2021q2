@@ -17,7 +17,8 @@ export class User {
     login: string;
 
     @Column({
-        length: 30
+        length: 30,
+        select: false
     })
     password: string;
 

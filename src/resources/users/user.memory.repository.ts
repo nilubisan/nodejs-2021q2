@@ -16,9 +16,9 @@ export const getUserByID = async (userID: string): Promise<User | 'NOT FOUND'> =
 
 export const createUser = async (user: User): Promise<User> => {
   const userRepository = getRepository(User);
-  const newUser = await userRepository.create(user);
+  const newUser = userRepository.create(user);
   const savedUser = await userRepository.save(newUser);
-  return savedUser;
+  return await getUserByID(savedUser.id) as User;
 };
 
 export const updateUser = async (userID: string, user: User): Promise<User | 'NOT FOUND'> => {

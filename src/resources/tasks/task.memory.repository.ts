@@ -3,41 +3,31 @@ import { getRepository } from 'typeorm';
 
 export const getTasksByBoardId = async (taskBoardID: string): Promise<Array<Task> | 'NOT FOUND'> => {
   const taskRepository = getRepository(Task);
-  const tasks = await taskRepository.find({ where: { boardID: taskBoardID}});
+  const tasks = await taskRepository.find({ where: { boardId: taskBoardID}});
   if(tasks === undefined) return 'NOT FOUND'
   return tasks;
 }
 
 export const createTask = async (task: Task): Promise<Task> => {
   const taskRepository = getRepository(Task);
-  const newTask = taskRepository.create(task);
-  const savedTask = taskRepository.save(newTask);
+  const newTask = await taskRepository.create(task);
+  const savedTask = await taskRepository.save(newTask);
   return savedTask;
 };
 
-export const getTask = async (boardID: string, taskID: string): Promise<Task | 'NOT FOUND'> => {
+export const getTask = async (__boardID: string, taskID: string): Promise<Task | 'NOT FOUND'> => {
   const taskRepository = getRepository(Task);
-  const task = await taskRepository.findOne({ where: 
-    [
-      {boardID: boardID},
-      {id: taskID}
-    ]
-  })
+  const task = await taskRepository.findOne(taskID);
+  console.log(task);
   if(task === undefined) return 'NOT FOUND';
   return task;
 };
 
-export const updateTask = async (task: Task, boardID: string, taskID: string): Promise<Task | 'NOT FOUND'> => {
+export const updateTask = async (task: Task, __boardID: string, taskID: string): Promise<Task | 'NOT FOUND'> => {
   const taskRepository = getRepository(Task);
-  const taskToUpdate = taskRepository.findOne({ where: 
-    [
-      {boardID: boardID},
-      {id: taskID}
-    ]
-  })
-  if(taskToUpdate === undefined) return 'NOT FOUND';
   const updatedTask = await taskRepository.update(taskID, task);
-  return updatedTask.raw;
+  if(updatedTask.affected) return updatedTask.raw;
+  return 'NOT FOUND';
 };
 
 export const deleteTask = async (__boardID: string, taskID: string): Promise<'NOT FOUND' | 'DELETED'> => {
@@ -49,5 +39,11 @@ export const deleteTask = async (__boardID: string, taskID: string): Promise<'NO
 
 export const unassignUser = async (deletedUserID: string): Promise<void> => {
   const taskRepository = getRepository(Task);
-  taskRepository.update({ userID: deletedUserID}, { userID: null})
+  await taskRepository.update({ userId: deletedUserID}, { userId: null})
+}
+
+export const deleteBoardsTasks = async(deletedBoardID: string): Promise<void> => {
+  const taskRepository = getRepository(Task);
+  const tasksToDelete = await taskRepository.find({ boardId: deletedBoardID});
+  taskRepository.remove(tasksToDelete);
 }

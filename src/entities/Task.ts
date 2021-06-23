@@ -22,12 +22,12 @@ export class Task {
         nullable: true,
         type: 'text'
     })
-    userID?: string | null;
+    userId?: string | null;
 
-    @Column()
-    boardID: string;
+    @Column({nullable: true})
+    boardId: string;
 
-    @Column()
-    columnID: string;
+    @Column({nullable: true})
+    columnId: string;
 
 }
