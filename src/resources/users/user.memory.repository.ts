@@ -1,6 +1,7 @@
 import { User } from '../../entities/User';
 import { getRepository } from 'typeorm';
-
+import bcrypt from 'bcrypt';
+const SALT = 10;
 
 export const getAllUsers = async (): Promise<Array<User>> => {
   const userRepository = getRepository(User);
@@ -16,7 +17,9 @@ export const getUserByID = async (userID: string): Promise<User | 'NOT FOUND'> =
 
 export const createUser = async (user: User): Promise<User> => {
   const userRepository = getRepository(User);
-  const newUser = userRepository.create(user);
+  const hashedPassword = await bcrypt.hash(user.password, SALT);
+  user.password = hashedPassword;
+  const newUser = await userRepository.create(user);
   const savedUser = await userRepository.save(newUser);
   return await getUserByID(savedUser.id) as User;
 };
