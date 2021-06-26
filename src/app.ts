@@ -4,12 +4,14 @@ import path from 'path';
 import YAML from 'yamljs';
 import { userRouter } from './resources/users/user.router';
 import { boardRouter } from './resources/boards/board.router';
+import { loginRouter } from './resources/login/login.router';
 import { Request, Response, NextFunction } from 'express';
 import { reqResHandler } from './middleware/req-res-handler';
 import { unhandledErrLog } from './middleware/unhandled-err-log';
 import { logger } from './common/logger'
 import { IUException } from './resources/interfaces/u-exception-interface';
 import { IURejection } from './resources/interfaces/u-rejection-interface';
+import { checkToken } from './middleware/check-token';
 
 export const app = express();
 const swaggerDocument = YAML.load(path.join(__dirname, '../doc/api.yaml'));
@@ -28,7 +30,8 @@ app.use('/', (req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-
+app.use(checkToken);
+app.use('/login', loginRouter);
 app.use('/users', userRouter);
 app.use('/boards', boardRouter);
 

@@ -1,10 +1,12 @@
-import { getAllUsers, getUserByID, createUser, updateUser, deleteUser } from './user.memory.repository';
+import { getAllUsers, getUserByID, createUser, updateUser, deleteUser, userExists } from './user.memory.repository';
 import { User } from '../../entities/User';
 import { unassignUserService } from '../tasks/task.service'
 
 export const getAllUsersService = async (): Promise<Array<User>> => getAllUsers();
 
 export const getUserByIdService = async (userID: string): Promise<User | 'NOT FOUND'> => getUserByID(userID);
+
+export const userExistsService = async (login: string, password: string):Promise<User | null> => userExists(login, password)
 
 export const createUserService = async (user: User): Promise<User> =>
   await createUser(user);
