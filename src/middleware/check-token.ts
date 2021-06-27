@@ -6,6 +6,10 @@ import { WHITELIST_PATH } from '../common/constants';
 dotenv.config({
   path: path.resolve(__dirname, '../../.env'),
 });
+import {
+  ReasonPhrases,
+  StatusCodes
+} from 'http-status-codes';
 
 export const checkToken = (
   req: Request,
@@ -15,14 +19,14 @@ export const checkToken = (
   if (!WHITELIST_PATH.includes(req.path)) {
     const authHeader = req.get('Authorization');
     if (authHeader === undefined) {
-      res.status(401).send('Authorization error');
+      res.status(StatusCodes.UNAUTHORIZED).send(ReasonPhrases.UNAUTHORIZED);
     } else {
       const [schema, token] = authHeader?.split(' ');
-      if (schema !== 'Bearer') res.status(401).send('Authorization error');
+      if (schema !== 'Bearer') res.status(StatusCodes.UNAUTHORIZED).send(ReasonPhrases.UNAUTHORIZED);
       try {
         jwt.verify(<string>token, process.env['SECRET_KEY'] as Secret);
       } catch (e) {
-        res.status(401).send('Authorization error');
+        res.status(StatusCodes.UNAUTHORIZED).send(ReasonPhrases.UNAUTHORIZED);
       }
       return next();
     }
