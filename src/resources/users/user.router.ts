@@ -1,7 +1,13 @@
 import express from 'express';
-import { Request, Response } from 'express'
-import { getAllUsersService, getUserByIdService, createUserService, updateUserService, deleteUserService } from './user.service'
-export const userRouter = express.Router({ mergeParams : true });
+import { Request, Response } from 'express';
+import {
+  getAllUsersService,
+  getUserByIdService,
+  createUserService,
+  updateUserService,
+  deleteUserService,
+} from './user.service';
+export const userRouter = express.Router({ mergeParams: true });
 
 userRouter.route('/').get(async (_req, res: Response) => {
   const users = await getAllUsersService();
@@ -16,8 +22,8 @@ userRouter.route('/:id').get(async (req: Request, res: Response) => {
 });
 
 userRouter.route('/').post(async (req: Request, res: Response) => {
-  const user = await createUserService(req.body);
-  res.status(201).json(user);
+  const result = await createUserService(req.body);
+  res.status(201).json(result);
 });
 
 userRouter.route('/:id').put(async (req: Request, res: Response) => {
@@ -29,7 +35,6 @@ userRouter.route('/:id').put(async (req: Request, res: Response) => {
 userRouter.route('/:id').delete(async (req: Request, res: Response) => {
   const userId = req.params['id'] as string;
   const deletionRes = await deleteUserService(userId);
-  if(deletionRes === 'DELETED') res.status(204).send(deletionRes);
+  if (deletionRes === 'DELETED') res.status(204).send(deletionRes);
   else res.status(404).send(deletionRes);
 });
-

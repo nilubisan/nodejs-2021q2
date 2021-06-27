@@ -1,3 +1,1 @@
-export const WHITELIST_PATH = [
-    '/login'
-]
+export const WHITELIST_PATH = ['/', '/login', '/doc'];
