@@ -23,8 +23,7 @@ export const getUserByID = async (userID: string): Promise<User | 'NOT FOUND'> =
 export const userExists = async (login: string, password: string): Promise<User | null> => {
   const userRepository = getRepository(User);
 
-  const hashedPassword = await bcrypt.hash(password, Number(process.env['SALT']));
-  console.log(hashedPassword)
+  await bcrypt.hash(password, Number(process.env['SALT']));
   const user = await userRepository.findOne({
     login: login
   });
@@ -33,13 +32,14 @@ export const userExists = async (login: string, password: string): Promise<User 
   return match ? user : null;
 }
 
-export const createUser = async (user: User): Promise<User> => {
+export const createUser = async (user: User): Promise<Partial<User>> => {
   const userRepository = getRepository(User);
   const hashedPassword = await bcrypt.hash(user.password, Number(process.env['SALT']));
   user.password = hashedPassword;
   const newUser = await userRepository.create(user);
   const savedUser = await userRepository.save(newUser);
-  return await getUserByID(savedUser.id) as User;
+  const {name, login, id} = savedUser;
+  return {name, login, id};
 };
 
 export const updateUser = async (userID: string, user: User): Promise<User | 'NOT FOUND'> => {

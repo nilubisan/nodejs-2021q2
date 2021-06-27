@@ -24,6 +24,8 @@ export const checkToken = (req: Request, res: Response, next: NextFunction): voi
             }
             return next();
         }
+    } else {
+        return next();
     }
-    next();
+
 }

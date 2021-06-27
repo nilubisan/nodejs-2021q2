@@ -2,7 +2,6 @@ import {getAllBoards, getBoardById, createBoard, updateBoard, deleteBoard} from 
 import { deleteBoardsTasksService } from '../tasks/task.service';
 import { Board } from '../../entities/Board'
 
-
 export const getAllBoardsService = async (): Promise<Board[]> => getAllBoards();
 
 export const getBoardByIdService = async (boardId: string): Promise<Board | 'NOT FOUND'> => getBoardById(boardId);

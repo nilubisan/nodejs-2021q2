@@ -8,7 +8,7 @@ export const getUserByIdService = async (userID: string): Promise<User | 'NOT FO
 
 export const userExistsService = async (login: string, password: string):Promise<User | null> => userExists(login, password)
 
-export const createUserService = async (user: User): Promise<User> =>
+export const createUserService = async (user: User): Promise<Partial<User>> =>
   await createUser(user);
 
 export const updateUserService = async (userID: string, user: User):  Promise<User | 'NOT FOUND'> =>

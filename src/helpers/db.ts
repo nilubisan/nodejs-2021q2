@@ -1,6 +1,6 @@
 import { getConnection, createConnection} from 'typeorm';
 import { connectionConfig } from '../common/ormconfig';
-
+import { addAdminToDB } from '../helpers/addAdmin'
 
 
 const connectToDB = async () => {
@@ -16,7 +16,8 @@ const connectToDB = async () => {
         if(connection) {
             if(!connection.isConnected) await connection.connect();
         } else {
-            createConnection(connectionConfig);
+            await createConnection(connectionConfig);
+            addAdminToDB();
         }
         console.log("Successfully connected")
     } catch(err) {
