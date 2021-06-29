@@ -1,9 +1,9 @@
-# RS School Docker Basics
+## Запуск приложения
 
-## Start
+1. Склонировать репозиторий командой git clone *ссылка на репозиторий*
+2. Установить зависимости через *npm install*
+3. Для запуска приложения - *npm run start*
 
-1. Use **npm i **  to install dependecies
-2. Use **docker-compose up** in the console for pulling required images and launching containers.
-3. Ready! Server has just been started
+Запуск через Докер пока невозможен.
 
 Discord: Rinat#9246
