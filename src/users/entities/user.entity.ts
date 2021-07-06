@@ -1,0 +1,25 @@
+import { Entity, Column, PrimaryGeneratedColumn } from 'typeorm';
+
+@Entity({ name: 'User' })
+export class UserEntity {
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
+
+  @Column({
+    length: 30,
+    default: 'username',
+  })
+  name: string;
+
+  @Column({
+    length: 30,
+  })
+  login: string;
+
+  @Column({
+    length: 200,
+    nullable: true,
+    select: false
+  })
+  password: string;
+}
