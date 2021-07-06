@@ -4,6 +4,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { Connection } from 'typeorm';
+import { BoardsModule } from './boards/boards.module';
 import * as dotenv from 'dotenv'
 import * as path from 'path';
 
@@ -22,7 +23,8 @@ dotenv.config();
       entities: [path.join(__dirname, './entities/*.ts')],
       synchronize: true,
       autoLoadEntities: true
-    })
+    }),
+    BoardsModule
   ],
   controllers: [AppController],
   providers: [AppService],
