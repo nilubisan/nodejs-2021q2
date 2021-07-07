@@ -23,7 +23,6 @@ export class BoardRepository extends Repository<BoardEntity> {
 
         const newBoard = await this.create(board);
         const savedBoard = await this.save(newBoard);
-        console.log(savedBoard)
         return savedBoard;
       };
       

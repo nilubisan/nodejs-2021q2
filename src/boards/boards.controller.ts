@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, Res, HttpStatus } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Res, HttpStatus } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
@@ -25,7 +25,7 @@ export class BoardsController {
     else res.status(HttpStatus.OK).json(result);
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(@Param('id') id: string, @Body() updateBoardDto: UpdateBoardDto, @Res() res: Response) {
     const result = await this.boardsService.update(id, updateBoardDto);
     if(result === 'NOT FOUND') res.status(HttpStatus.NOT_FOUND).send(result);

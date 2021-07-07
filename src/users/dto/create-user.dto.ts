@@ -1,7 +1,7 @@
-import { IsAlphanumeric, isAlphanumeric, IsInt, isInt, Length } from "class-validator";
+import { IsAlphanumeric, isAlphanumeric, IsInt, isInt, IsUUID, Length } from "class-validator";
 
 export class CreateUserDto {
-    @IsAlphanumeric()
+    @IsUUID()
     id: string;
 
     @Length(2,15)
@@ -14,5 +14,4 @@ export class CreateUserDto {
 
     @Length(6,15)
     password: string;
-
 }

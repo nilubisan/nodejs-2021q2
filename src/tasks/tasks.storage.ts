@@ -13,7 +13,8 @@ export class TasksRepository extends Repository<TaskEntity> {
         return tasks;
       };
       
-      async createTask (task: CreateTaskDto): Promise<TaskEntity> {
+      async createTask (boardId: string, task: CreateTaskDto): Promise<TaskEntity> {
+        task.boardId = boardId;
         const newTask = await this.create(task);
         const savedTask = await this.save(newTask);
         return savedTask;
@@ -42,7 +43,9 @@ export class TasksRepository extends Repository<TaskEntity> {
       };
       
       async deleteBoardsTasks (deletedBoardID: string): Promise<void> {
+        console.log(deletedBoardID);
         const tasksToDelete = await this.find({ boardId: deletedBoardID });
+        console.log(tasksToDelete);
         await this.remove(tasksToDelete);
       };    
 }

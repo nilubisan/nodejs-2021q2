@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, HttpStatus, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Put, Param, Delete, HttpStatus, Res } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -10,7 +10,7 @@ export class UsersController {
 
   @Post()
   async create(@Body() createUserDto: CreateUserDto, @Res() res:Response) {
-    const result = this.usersService.create(createUserDto);
+    const result = await this.usersService.create(createUserDto);
     res.status(HttpStatus.CREATED).json(result);
   }
 
@@ -27,7 +27,7 @@ export class UsersController {
     else res.status(HttpStatus.OK).json(result);
   }
 
-  @Patch(':id')
+  @Put(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto, @Res() res: Response) {
     const result = await this.usersService.update(id, updateUserDto);
     if(result === 'NOT FOUND') res.status(HttpStatus.NOT_FOUND).send(result);

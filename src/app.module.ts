@@ -9,12 +9,13 @@ import { BoardsModule } from './boards/boards.module';
 import { TasksModule } from './tasks/tasks.module';
 import * as dotenv from 'dotenv'
 import * as path from 'path';
-import { routes } from './routes';
+
 
 dotenv.config();
 
 @Module({
   imports: [
+
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env['DB_HOST'],
@@ -26,7 +27,6 @@ dotenv.config();
       synchronize: true,
       autoLoadEntities: true
     }),
-    RouterModule.forRoutes(routes),
     UsersModule,
     BoardsModule,
     TasksModule

@@ -7,8 +7,8 @@ import { TasksRepository } from './tasks.storage';
 @Injectable()
 export class TasksService {
   constructor(private storage: TasksRepository) {}
-  async create(createTaskDto: CreateTaskDto): Promise<TaskEntity> {
-    return await this.storage.createTask(createTaskDto);
+  async create(boardId: string, createTaskDto: CreateTaskDto): Promise<TaskEntity> {
+    return await this.storage.createTask(boardId, createTaskDto);
   }
 
   async getTasksByBoardId(boardID: string): Promise<Array<TaskEntity> | 'NOT FOUND'> {
@@ -31,7 +31,7 @@ export class TasksService {
     await this.storage.unassignUser(deletedUserID);
   };
   
-  async deleteBoardsTasks (deletedBoardID: string): Promise<void> {
+  public async deleteBoardsTasks (deletedBoardID: string): Promise<void> {
     await this.storage.deleteBoardsTasks(deletedBoardID);
   };    
 }

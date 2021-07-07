@@ -6,19 +6,22 @@ import { UserEntity } from "./entities/user.entity";
 import { EntityRepository, Repository } from "typeorm";
 import * as bcrypt from "bcryptjs"
 import * as dotenv from 'dotenv'
+import { ReturnSafeUserDto } from "./dto/return-safe-user.dto";
 dotenv.config();
 
 @Injectable()
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity>  {
-    async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
+    async createUser(createUserDto: CreateUserDto): Promise<ReturnSafeUserDto> {
         const hashedPassword = await bcrypt.hash(
           createUserDto.password,
           Number(process.env['SALT'])
         );
         createUserDto.password = hashedPassword;
         const newUser = await this.create(createUserDto);
-        return await this.save(newUser);
+        const savedUser = await this.save(newUser);
+        const { id, login, name } = savedUser;
+        return { id, login, name };
       }
     
       async getAllUsers(): Promise<UserEntity[]> {
@@ -32,7 +35,6 @@ export class UserRepository extends Repository<UserEntity>  {
       }
     
       async updateUser(id: string, updateUserDto: UpdateUserDto): Promise<UserEntity | 'NOT FOUND'> {
-        console.log(id);
         const userToUpdate = await this.findOne(id);
         if (userToUpdate === undefined) return 'NOT FOUND';
         const updatedUser = await this.update(id, updateUserDto);

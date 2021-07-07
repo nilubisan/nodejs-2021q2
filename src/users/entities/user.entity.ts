@@ -19,7 +19,8 @@ export class UserEntity {
   @Column({
     length: 200,
     nullable: true,
-    select: false
+    select: false,
+    default: '12345'
   })
-  password: string;
+  password?: string;
 }
