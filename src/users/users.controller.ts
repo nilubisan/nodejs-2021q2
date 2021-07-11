@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, HttpStatus, Res, UseFilters, HttpException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, HttpStatus, Res, UseFilters, Logger } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
@@ -11,12 +11,14 @@ import { HttpExceptionFilter } from 'src/exception-filters/http-exception.filter
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
+  private readonly logger = new Logger(UsersService.name);
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
   async create(@Body() createUserDto: CreateUserDto, @Res() res:Response) {
     const result = await this.usersService.create(createUserDto);
     res.status(HttpStatus.CREATED).json(result);
+    this.logger.log(createUserDto)
   }
 
   @Get()
