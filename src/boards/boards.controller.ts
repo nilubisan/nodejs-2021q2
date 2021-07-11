@@ -1,11 +1,12 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, Res, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Res, HttpStatus, UseGuards, UseFilters } from '@nestjs/common';
 import { BoardsService } from './boards.service';
 import { CreateBoardDto } from './dto/create-board.dto';
 import { UpdateBoardDto } from './dto/update-board.dto';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
+import { HttpExceptionFilter } from 'src/exception-filters/http-exception.filter';
 
-
+@UseFilters(HttpExceptionFilter)
 @Controller('boards')
 export class BoardsController {
   constructor(private readonly boardsService: BoardsService) {}

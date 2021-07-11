@@ -12,7 +12,6 @@ constructor(private usersService: UsersService, private readonly jwtService: Jwt
 
 async validateUser(payload: JwtPayload): Promise<UserDto | null> {
     const user = await this.usersService.findByPayload(payload);
-    console.log(payload)
     if(!user) {
         throw new HttpException('Invalid Token', HttpStatus.UNAUTHORIZED);
     }

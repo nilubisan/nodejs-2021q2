@@ -10,9 +10,16 @@ import { LoginUserDto } from './dto/login-user.dto';
 import * as bcrypt from "bcryptjs"
 import { JwtPayload } from 'src/auth/jwt.interface';
 
+
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(UserRepository) private storage: UserRepository, private tasksService: TasksService) {}
+  constructor(@InjectRepository(UserRepository) private storage: UserRepository, private tasksService: TasksService) {
+    this.storage.createUser({
+      "login": "admin",
+      "name": "admin",
+      "password": "admin"
+    } as CreateUserDto)
+  }
   async create(createUserDto: CreateUserDto): Promise<UserDto> {
     return await this.storage.createUser(createUserDto)
   }
@@ -28,7 +35,6 @@ export class UsersService {
         where: { login }
       })
       if(!user) throw new HttpException("User not found", HttpStatus.UNAUTHORIZED);
-      console.log(user)
       const areEqual = await bcrypt.compare(password, user.password)
       if(!areEqual) throw new HttpException("Invalid credentials", HttpStatus.UNAUTHORIZED);
       return user;

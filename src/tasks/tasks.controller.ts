@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, Res, HttpStatus, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Res, HttpStatus, UseGuards, UseFilters } from '@nestjs/common';
 import { TasksService } from './tasks.service';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
+import { HttpExceptionFilter } from 'src/exception-filters/http-exception.filter';
 
+@UseFilters(HttpExceptionFilter)
 @Controller('/boards/:boardId/tasks/')
 export class TasksController {
   constructor(private readonly tasksService: TasksService) {}

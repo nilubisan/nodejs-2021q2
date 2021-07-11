@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, HttpStatus, Res } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, HttpStatus, Res, UseFilters, HttpException } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { UseGuards } from '@nestjs/common';
+import { HttpExceptionFilter } from 'src/exception-filters/http-exception.filter';
 
+@UseFilters(HttpExceptionFilter)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
