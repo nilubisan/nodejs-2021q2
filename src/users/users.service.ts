@@ -13,7 +13,7 @@ import { JwtPayload } from 'src/auth/jwt.interface';
 
 @Injectable()
 export class UsersService {
-  constructor(@InjectRepository(UserRepository) private storage: UserRepository, private tasksService: TasksService) {
+  constructor(@InjectRepository(UserRepository) private storage: UserRepository, private tasksService: TasksService ) {
     this.storage.createUser({
       "login": "admin",
       "name": "admin",

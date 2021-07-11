@@ -1,29 +1,28 @@
-import { Controller, Get, Post, Body, Put, Param, Delete, HttpStatus, Res, UseFilters, Logger } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, HttpStatus, Res, Req, UseFilters, Logger } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { Response } from 'express';
+import { Request, Response } from 'express';
 import { AuthGuard } from '@nestjs/passport';
 import { UseGuards } from '@nestjs/common';
 import { HttpExceptionFilter } from 'src/exception-filters/http-exception.filter';
+
 
 @UseFilters(HttpExceptionFilter)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
-  private readonly logger = new Logger(UsersService.name);
 
   @Post()
   @UseGuards(AuthGuard('jwt'))
-  async create(@Body() createUserDto: CreateUserDto, @Res() res:Response) {
+  async create(@Req() req: Request, @Body() createUserDto: CreateUserDto, @Res() res:Response) {
     const result = await this.usersService.create(createUserDto);
     res.status(HttpStatus.CREATED).json(result);
-    this.logger.log(createUserDto)
   }
 
   @Get()
   @UseGuards(AuthGuard('jwt'))
-  async findAll(@Res() res: Response) {
+  async findAll(@Req() req: Request, @Res() res: Response) {
     const users = await this.usersService.findAll();
     res.status(HttpStatus.OK).json(users);
   }
