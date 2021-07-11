@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { RouterModule } from 'nest-router';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { Connection } from 'typeorm';
 import { BoardsModule } from './boards/boards.module';
 import { TasksModule } from './tasks/tasks.module';
+import { AuthModule } from './auth/auth.module';
 import * as dotenv from 'dotenv'
 import * as path from 'path';
 
@@ -15,7 +15,6 @@ dotenv.config();
 
 @Module({
   imports: [
-
     TypeOrmModule.forRoot({
       type: 'postgres',
       host: process.env['DB_HOST'],
@@ -29,11 +28,13 @@ dotenv.config();
     }),
     UsersModule,
     BoardsModule,
-    TasksModule
+    TasksModule,
+    AuthModule
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export default class AppModule {
-  constructor(private connection: Connection) {}
+  constructor(private connection: Connection) {
+  }
 }

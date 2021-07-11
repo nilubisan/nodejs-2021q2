@@ -6,26 +6,30 @@ import { UserEntity } from "./entities/user.entity";
 import { EntityRepository, Repository } from "typeorm";
 import * as bcrypt from "bcryptjs"
 import * as dotenv from 'dotenv'
-import { ReturnSafeUserDto } from "./dto/return-safe-user.dto";
+import { UserDto } from "./dto/user.dto";
+import { toUserDto } from '../helpers/toUserDto'
 dotenv.config();
 
 @Injectable()
 @EntityRepository(UserEntity)
 export class UserRepository extends Repository<UserEntity>  {
-    async createUser(createUserDto: CreateUserDto): Promise<ReturnSafeUserDto> {
-        const hashedPassword = await bcrypt.hash(
-          createUserDto.password,
-          Number(process.env['SALT'])
-        );
-        createUserDto.password = hashedPassword;
+    async createUser(createUserDto: CreateUserDto): Promise<UserDto> {
+        // const hashedPassword = await bcrypt.hash(
+        //   createUserDto.password,
+        //   Number(process.env['SALT'])
+        // );
+        // createUserDto.password = hashedPassword;
         const newUser = await this.create(createUserDto);
         const savedUser = await this.save(newUser);
-        const { id, login, name } = savedUser;
-        return { id, login, name };
+        return toUserDto(savedUser)
       }
     
       async getAllUsers(): Promise<UserEntity[]> {
         return await this.find({});
+      }
+
+      async findByLogin(options: {login: string}): Promise<UserEntity | undefined>{
+        return await this.findOne(options);
       }
     
       async findById(id: string): Promise<UserEntity | 'NOT FOUND'> {
