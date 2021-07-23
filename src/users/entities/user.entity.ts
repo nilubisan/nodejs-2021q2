@@ -17,7 +17,8 @@ export class UserEntity {
 
   @Column({
     length: 30,
-    type: 'varchar'
+    type: 'varchar',
+    nullable: true
   })
   login: string;
 
@@ -28,6 +29,7 @@ export class UserEntity {
     type: 'varchar'
   })
   password?: string;
+
 
   @BeforeInsert() async hashPassword() {
     this.password = await bcrypt.hash(
